@@ -1,10 +1,14 @@
 FROM     ubuntu:14.04
 
+LABEL Maintainer="Malcolm Jones <bossjones@theblacktonystark.com>"
 # ---------------- #
 #   Installation   #
 # ---------------- #
 
 ENV DEBIAN_FRONTEND noninteractive
+
+ENV JVMTOP_VERSION=0.8.0 \
+        GOSS_VERSION=v0.3.4
 
 # Install all prerequisites
 RUN     apt-get -y update &&\
@@ -107,6 +111,22 @@ EXPOSE  8126
 
 # Graphite web port
 EXPOSE 81
+
+
+
+# ---------------- #
+#   Debbing Tools  #
+# ---------------- #
+
+RUN set -x; apt-get update && apt-get install -yqq net-tools vim htop ccze && \
+        cd /usr/local/bin && \
+        curl -L https://github.com/aelsabbahy/goss/releases/download/${GOSS_VERSION}/goss-linux-amd64 -o /usr/local/bin/goss && \
+        chmod +x /usr/local/bin/goss
+
+# Overlay the root filesystem from this repo
+COPY ./container/root /
+
+RUN goss -g /tests/goss.graphite.yaml validate
 
 
 
