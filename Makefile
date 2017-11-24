@@ -133,7 +133,7 @@ shell:
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
 
 tail:
-	docker logs -f $(username)/$(container_name):latest
+	docker logs -f $(container_name)
 
 # FIX for: WARNING: Dependency conflict: an older version of the 'docker-py' package may be polluting the namespace. If you're experiencing crashes, run the following command to remedy the issue:
 rm-docker-py:
