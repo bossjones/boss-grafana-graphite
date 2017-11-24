@@ -14,9 +14,9 @@ services:
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
-      - '127.0.0.1:80:80'
+      - '127.0.0.1:8080:80'
       # the Graphite web port
-      - '127.0.0.1:81:81'
+      - '127.0.0.1:8180:81'
       # the StatsD port.
       - '127.0.0.1:8125:8125/udp'
       # the StatsD administrative port.
