@@ -7,7 +7,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # image: elasticsearch
     image: bossjones/boss-grafana-graphite:latest
     # network_mode: "host"
     # container_name: boss-grafana-graphite
@@ -27,21 +26,21 @@ services:
       - '2004:2004'
       # carbon: pickle
       - '7002:7002'
-    # expose:
-    #   # the Grafana web interface
-    #   - '80'
-    #   # the Graphite web port
-    #   - '81'
-    #   # the StatsD port.
-    #   - '8125'
-    #   # the StatsD administrative port.
-    #   - '8126'
-    #   # carbon: newline
-    #   - '2003'
-    #   # carbon: delimited
-    #   - '2004'
-    #   # carbon: pickle
-    #   - '7002'
+    expose:
+      # the Grafana web interface
+      - '80'
+      # the Graphite web port
+      - '81'
+      # the StatsD port.
+      - '8125'
+      # the StatsD administrative port.
+      - '8126'
+      # carbon: newline
+      - '2003'
+      # carbon: delimited
+      - '2004'
+      # carbon: pickle
+      - '7002'
     logging:
       driver: "json-file"
       options:
