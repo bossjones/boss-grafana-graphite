@@ -139,5 +139,8 @@ tail:
 rm-docker-py:
 	sudo pip uninstall -y docker-py; sudo pip uninstall -y docker; sudo pip install docker
 
-firewalld:
+firewalld: firewalld-reload
 	sudo firewall-cmd --add-port=1-65535/udp --permanent && sudo firewall-cmd --add-port=1-65535/tcp --permanent
+
+firewalld-reload:
+	sudo firewall-cmd --reload
