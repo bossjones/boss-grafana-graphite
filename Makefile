@@ -103,17 +103,17 @@ prep:
 		log/elasticsearch
 
 pull:
-	docker-compose -f docker-compose.yaml pull
+	docker-compose pull
 
 up: prep pull
-	docker-compose -f docker-compose.yaml up
+	docker-compose up
 
 dev-up: up
 
 dev-down: down
 
 up-d: prep pull
-	docker-compose -f docker-compose.yaml up -d
+	docker-compose up -d
 
 down:
 	docker-compose down && \
