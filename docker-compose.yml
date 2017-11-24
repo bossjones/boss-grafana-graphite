@@ -14,19 +14,19 @@ services:
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
-      - '127.0.0.1:8080:80'
+      - '8080:80'
       # the Graphite web port
-      - '127.0.0.1:8180:81'
+      - '8180:81'
       # the StatsD port.
-      - '127.0.0.1:8125:8125/udp'
+      - '8125:8125/udp'
       # the StatsD administrative port.
-      - '127.0.0.1:8126:8126'
+      - '8126:8126'
       # carbon: newline
-      - '127.0.0.1:2003:2003'
+      - '2003:2003'
       # carbon: delimited
-      - '127.0.0.1:2004:2004'
+      - '2004:2004'
       # carbon: pickle
-      - '127.0.0.1:7002:7002'
+      - '7002:7002'
     expose:
       # the Grafana web interface
       - '80'
