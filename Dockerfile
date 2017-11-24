@@ -128,8 +128,6 @@ COPY ./container/root /
 
 RUN goss -g /tests/goss.graphite.yaml validate
 
-
-
 # -------- #
 #   Run!   #
 # -------- #
