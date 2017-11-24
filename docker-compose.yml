@@ -1,7 +1,7 @@
 version: "3"
 
 # source: https://github.com/ksindi/kafka-pyspark-demo/blob/master/docker-compose.yml
-
+# bridge mode
 services:
   grafana-graphite:
     build:
