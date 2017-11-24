@@ -31,7 +31,7 @@ endif
 list:
 	@$(MAKE) -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort
 
-build:
+build: prep
 	docker build --tag $(username)/$(container_name):$(GIT_SHA) . ; \
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):latest
 	docker tag $(username)/$(container_name):$(GIT_SHA) $(username)/$(container_name):$(TAG)
@@ -71,7 +71,7 @@ push:
 
 push-force: build-force push
 
-dc-up:
+dc-up: prep
 	docker-compose -f docker-compose.yml create && \
 	docker-compose -f docker-compose.yml start
 
@@ -81,7 +81,7 @@ dc-down:
 
 grafana-graphite-restart: grafana-graphite-down grafana-graphite-up
 
-grafana-graphite-up:
+grafana-graphite-up: prep
 	docker-compose -f docker-compose.yml up -d grafana-graphite
 
 grafana-graphite-down:
