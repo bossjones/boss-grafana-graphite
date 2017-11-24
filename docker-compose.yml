@@ -52,14 +52,12 @@ services:
         max-file: "10"
     # source: https://github.com/moby/moby/issues/23910
     # Docker should use the host network DNS server
-    # extra_hosts:
-    #   - "moby:127.0.0.1"
-    #   - "default:127.0.0.1"
-    #   - "dockerhost:127.0.0.1"
-    #   - "baxter:127.0.0.1"
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "default:127.0.0.1"
+      - "dockerhost:127.0.0.1"
+      - "baxter:127.0.0.1"
     restart: always
-    tty: true
-    stdin_open: true
     healthcheck:
       test: curl -s http://localhost/ || exit 1
       interval: 5s
