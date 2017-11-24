@@ -114,3 +114,7 @@ shell:
 
 tail:
 	docker logs -f $(username)/$(container_name):latest
+
+# FIX for: WARNING: Dependency conflict: an older version of the 'docker-py' package may be polluting the namespace. If you're experiencing crashes, run the following command to remedy the issue:
+rm-docker-py:
+	sudo pip uninstall -y docker-py; sudo pip uninstall -y docker; sudo pip install docker
