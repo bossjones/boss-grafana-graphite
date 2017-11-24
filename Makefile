@@ -116,7 +116,10 @@ up-d: prep pull
 	docker-compose -f docker-compose.yaml up -d
 
 down:
-	docker-compose down
+	docker-compose down && \
+	docker-compose rm -f
+
+restart: down up
 
 shell:
 	docker exec -ti $(username)/$(container_name):latest /bin/bash
