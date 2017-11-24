@@ -110,6 +110,14 @@ nuke:
 	rm -rfv log/graphite/webapp && \
 	rm -rfv log/elasticsearch
 
+nuke-sudo:
+	sudo rm -rfv data/whisper && \
+	sudo rm -rfv data/elasticsearch && \
+	sudo rm -rfv data/grafana && \
+	sudo rm -rfv log/graphite && \
+	sudo rm -rfv log/graphite/webapp && \
+	sudo rm -rfv log/elasticsearch
+
 pull:
 	docker-compose pull
 
