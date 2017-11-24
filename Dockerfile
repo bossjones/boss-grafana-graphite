@@ -121,7 +121,9 @@ EXPOSE 81
 RUN set -x; apt-get update && apt-get install -yqq net-tools vim htop ccze && \
         cd /usr/local/bin && \
         curl -L https://github.com/aelsabbahy/goss/releases/download/${GOSS_VERSION}/goss-linux-amd64 -o /usr/local/bin/goss && \
-        chmod +x /usr/local/bin/goss
+        chmod +x /usr/local/bin/goss && \
+        groupadd -r pi -g 1000 && \
+        useradd -u 1000 -g pi pi
 
 # Overlay the root filesystem from this repo
 COPY ./container/root /

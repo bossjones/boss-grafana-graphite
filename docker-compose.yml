@@ -13,7 +13,7 @@ services:
     # source: https://github.com/hiniko/docker-monitoring/blob/master/docker-compose.yml
     environment:
       - HOSTNAME=grafana-graphite
-    # privileged: true
+    privileged: true
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
