@@ -41,7 +41,6 @@
     "*.mo": "explorerExcludedFiles",
     "*.pot": "explorerExcludedFiles",
     "*.log": "explorerExcludedFiles",
-    "local_settings.py": "explorerExcludedFiles",
     "instance/": "explorerExcludedFiles",
     ".webassets-cache": "explorerExcludedFiles",
     ".scrapy": "explorerExcludedFiles",

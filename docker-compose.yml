@@ -1,16 +1,125 @@
-version: '2'
+version: "3"
+
+# source: https://github.com/ksindi/kafka-pyspark-demo/blob/master/docker-compose.yml
+# bridge mode
 services:
-  grafana_graphite:
-    build: .
-    image: kamon/grafana_graphite
-    container_name: kamon-grafana-dashboard
+  grafana-graphite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bossjones/boss-grafana-graphite:latest
+    network_mode: "host"
+    container_name: boss-grafana-graphite
+    # source: https://github.com/hiniko/docker-monitoring/blob/master/docker-compose.yml
+    # environment:
+    #   - HOSTNAME=grafana-graphite
+    environment:
+      - HOSTNAME=${HOST_IP}
+    privileged: true
     ports:
-      - '80:80'
+      # protocols (newline delimited, pickle)
+      # the Grafana web interface
+      # - '80:80'
+      - '0.0.0.0:80:3000'
+      # the Graphite web port
       - '81:81'
+      # the StatsD port.
       - '8125:8125/udp'
+      # the StatsD administrative port.
       - '8126:8126'
+      # carbon: newline
       - '2003:2003'
+      # carbon: delimited
+      - '2004:2004'
+      # carbon: pickle
+      - '7002:7002'
+    expose:
+      # the Grafana web interface
+      - '80'
+      # the Graphite web port
+      - '81'
+      # the StatsD port.
+      - '8125'
+      # the StatsD administrative port.
+      - '8126'
+      # carbon: newline
+      - '2003'
+      # carbon: delimited
+      - '2004'
+      # carbon: pickle
+      - '7002'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+    # source: https://github.com/moby/moby/issues/23910
+    # Docker should use the host network DNS server
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "default:127.0.0.1"
+      - "dockerhost:127.0.0.1"
+      - "baxter:127.0.0.1"
+    restart: always
+    cap_add:
+      - ALL
+    healthcheck:
+      test: curl -s http://localhost/ || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 15
     volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
       - ./data/whisper:/opt/graphite/storage/whisper
       - ./data/grafana:/opt/grafana/data
       - ./log/graphite:/opt/graphite/storage/log
+    # volumes:
+    #   - ./data/whisper:/opt/graphite/storage/whisper
+    #   - ./data/grafana:/opt/grafana/data
+    #   - ./log/graphite:/opt/graphite/storage/log
+    #   - ./log/supervisor:/var/log/supervisor
+
+# version: '3.1'
+# services:
+#   grafana_service:
+#     image: anmolnagpal/grafana:{{ grafana_version }}
+#     container_name: grafana
+#     ## settings_template_start ##
+#     privileged: true
+#     ulimits:
+#       nproc: 65535
+#       memlock:
+#         soft: -1
+#         hard: -1
+#       nofile:
+#         soft: 165536
+#         hard: 165536
+#     cap_add:
+#       - ALL
+#     ## settings_template_end ##
+#     volumes:
+#       - {{ grafana_log_dir }}:/var/log/grafana
+#       - {{ grafana_config_dir }}/grafana.yml:/usr/share/grafana/config/grafana.yml
+#     ports:
+#       - {{ grafana_port }}:{{ grafana_port }}
+#     network_mode: host
+
+
+  # jmxtrans:
+  #   image: pitrho/jmxtrans:v0.1.1
+  #   labels:
+  #     io.rancher.scheduler.global: 'true'
+  #     io.rancher.scheduler.affinity:host_label: cassandra-server=true
+  #     io.rancher.sidekicks: cassandra-metrics-config
+  #   log_driver: "json-file"
+  #   log_opt:
+  #     max-size: "50m"
+  #     max-file: "7"
+  #   environment:
+  #     SECONDS_BETWEEN_RUNS: $SECONDS_BETWEEN_RUNS
+  #     CONTINUE_ON_ERROR: $CONTINUE_ON_ERROR
+  #     FILENAME: /config/queries.json
+  #     JMXTRANS_OPTS: -Djmxtrans.log.level=WARN -Djmxtrans.log.dir=/var/log/jmxtrans -Dlog4j.configuration=file:/config/log4j_logentries.xml
+  #     JAVA_OPTS: -cp /usr/share/jmxtrans/lib/jmxtrans-all.jar:/config/logentries-appender.jar -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true
+  #   volumes_from:
+  #     - cassandra-metrics-config

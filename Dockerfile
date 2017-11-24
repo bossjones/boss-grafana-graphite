@@ -1,13 +1,17 @@
 FROM     ubuntu:14.04
 
+LABEL Maintainer="Malcolm Jones <bossjones@theblacktonystark.com>"
 # ---------------- #
 #   Installation   #
 # ---------------- #
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV JVMTOP_VERSION=0.8.0 \
+        GOSS_VERSION=v0.3.4
+
 # Install all prerequisites
-RUN     apt-get -y update &&\ 
+RUN     apt-get -y update &&\
 	apt-get -y install software-properties-common python-django-tagging python-simplejson \
 	python-memcache python-ldap python-cairo python-pysqlite2 python-support python-pip \
 	gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev
@@ -77,7 +81,7 @@ RUN     cd /opt/graphite/webapp/ && python manage.py migrate --run-syncdb --noin
 ADD     ./grafana/custom.ini /opt/grafana/conf/custom.ini
 RUN	cd /src && wizzy init 										&&\
 	extract() { cat /opt/grafana/conf/custom.ini | grep $1 | awk '{print $NF}'; }			&&\
-	wizzy set grafana url $(extract ";protocol")://$(extract ";domain"):$(extract ";http_port")	&&\		
+	wizzy set grafana url $(extract ";protocol")://$(extract ";domain"):$(extract ";http_port")	&&\
 	wizzy set grafana username $(extract ";admin_user")						&&\
 	wizzy set grafana password $(extract ";admin_password")
 # Add the default datasource and dashboards
@@ -109,6 +113,22 @@ EXPOSE  8126
 EXPOSE 81
 
 
+
+# ---------------- #
+#   Debbing Tools  #
+# ---------------- #
+
+RUN set -x; apt-get update && apt-get install -yqq net-tools vim htop ccze && \
+        cd /usr/local/bin && \
+        curl -L https://github.com/aelsabbahy/goss/releases/download/${GOSS_VERSION}/goss-linux-amd64 -o /usr/local/bin/goss && \
+        chmod +x /usr/local/bin/goss && \
+        groupadd -r pi -g 1000 && \
+        useradd -u 1000 -g pi pi
+
+# Overlay the root filesystem from this repo
+COPY ./container/root /
+
+RUN goss -g /tests/goss.graphite.yaml validate
 
 # -------- #
 #   Run!   #
