@@ -80,7 +80,7 @@ dc-down:
 	docker-compose -f docker-compose.yml down
 
 dc-build:
-	docker-compose -f docker-compose.yml --force-rm --pull
+	docker-compose -f docker-compose.yml --force-rm --pull build
 
 grafana-graphite-restart: grafana-graphite-down grafana-graphite-up
 
