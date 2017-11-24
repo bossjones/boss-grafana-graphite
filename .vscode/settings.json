@@ -103,7 +103,6 @@
     ".DS_Store?": "explorerExcludedFiles",
     ".sass-cache": "explorerExcludedFiles",
     "*.css.map": "explorerExcludedFiles",
-    "local_settings.py": "explorerExcludedFiles",
     ".idea/": "explorerExcludedFiles",
     "metastore_db/": "explorerExcludedFiles"
   }
