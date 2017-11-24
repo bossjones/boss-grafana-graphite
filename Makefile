@@ -103,6 +103,10 @@ pull:
 up: prep pull
 	docker-compose -f docker-compose.yaml up
 
+dev-up: up
+
+dev-down: down
+
 up-d: prep pull
 	docker-compose -f docker-compose.yaml up -d
 
