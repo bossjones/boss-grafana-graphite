@@ -8,8 +8,8 @@ services:
       context: .
       dockerfile: Dockerfile
     image: bossjones/boss-grafana-graphite:latest
-    # network_mode: "host"
-    # container_name: boss-grafana-graphite
+    network_mode: "host"
+    container_name: boss-grafana-graphite
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
