@@ -103,20 +103,12 @@ prep:
 		log/elasticsearch
 
 nuke:
-	rm -rfv data/whisper && \
-	rm -rfv data/elasticsearch && \
-	rm -rfv data/grafana && \
-	rm -rfv log/graphite && \
-	rm -rfv log/graphite/webapp && \
-	rm -rfv log/elasticsearch
+	rm -rfv data && \
+	rm -rfv log
 
 nuke-sudo:
-	sudo rm -rfv data/whisper && \
-	sudo rm -rfv data/elasticsearch && \
-	sudo rm -rfv data/grafana && \
-	sudo rm -rfv log/graphite && \
-	sudo rm -rfv log/graphite/webapp && \
-	sudo rm -rfv log/elasticsearch
+	sudo rm -rfv data && \
+	sudo rm -rfv log
 
 pull:
 	docker-compose pull
