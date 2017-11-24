@@ -8,18 +8,18 @@ services:
       context: .
       dockerfile: Dockerfile
     image: bossjones/boss-grafana-graphite:latest
-    network_mode: "host"
+    # network_mode: "host"
     container_name: boss-grafana-graphite
     # source: https://github.com/hiniko/docker-monitoring/blob/master/docker-compose.yml
-    environment:
-      - HOSTNAME=grafana-graphite
-    privileged: true
+    # environment:
+    #   - HOSTNAME=grafana-graphite
+    # privileged: true
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
-      - '8000:80'
+      - '80:80'
       # the Graphite web port
-      - '8100:81'
+      - '81:81'
       # the StatsD port.
       - '8125:8125/udp'
       # the StatsD administrative port.
@@ -52,11 +52,11 @@ services:
         max-file: "10"
     # source: https://github.com/moby/moby/issues/23910
     # Docker should use the host network DNS server
-    extra_hosts:
-      - "moby:127.0.0.1"
-      - "default:127.0.0.1"
-      - "dockerhost:127.0.0.1"
-      - "baxter:127.0.0.1"
+    # extra_hosts:
+    #   - "moby:127.0.0.1"
+    #   - "default:127.0.0.1"
+    #   - "dockerhost:127.0.0.1"
+    #   - "baxter:127.0.0.1"
     restart: always
     healthcheck:
       test: curl -s http://localhost/ || exit 1
