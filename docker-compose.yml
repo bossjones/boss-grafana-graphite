@@ -10,12 +10,16 @@ services:
     image: bossjones/boss-grafana-graphite:latest
     network_mode: "host"
     container_name: boss-grafana-graphite
+    # source: https://github.com/hiniko/docker-monitoring/blob/master/docker-compose.yml
+    environment:
+      - HOSTNAME=grafana-graphite
+    # privileged: true
     ports:
       # protocols (newline delimited, pickle)
       # the Grafana web interface
-      - '80:80'
+      - '8000:80'
       # the Graphite web port
-      - '81:81'
+      - '8100:81'
       # the StatsD port.
       - '8125:8125/udp'
       # the StatsD administrative port.
@@ -54,6 +58,8 @@ services:
     #   - "dockerhost:127.0.0.1"
     #   - "baxter:127.0.0.1"
     restart: always
+    tty: true
+    stdin_open: true
     healthcheck:
       test: curl -s http://localhost/ || exit 1
       interval: 5s
@@ -68,6 +74,32 @@ services:
       - ./data/grafana:/opt/grafana/data
       - ./log/graphite:/opt/graphite/storage/log
       - ./log/supervisor:/var/log/supervisor
+
+# version: '3.1'
+# services:
+#   grafana_service:
+#     image: anmolnagpal/grafana:{{ grafana_version }}
+#     container_name: grafana
+#     ## settings_template_start ##
+#     privileged: true
+#     ulimits:
+#       nproc: 65535
+#       memlock:
+#         soft: -1
+#         hard: -1
+#       nofile:
+#         soft: 165536
+#         hard: 165536
+#     cap_add:
+#       - ALL
+#     ## settings_template_end ##
+#     volumes:
+#       - {{ grafana_log_dir }}:/var/log/grafana
+#       - {{ grafana_config_dir }}/grafana.yml:/usr/share/grafana/config/grafana.yml
+#     ports:
+#       - {{ grafana_port }}:{{ grafana_port }}
+#     network_mode: host
+
 
   # jmxtrans:
   #   image: pitrho/jmxtrans:v0.1.1

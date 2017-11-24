@@ -102,6 +102,14 @@ prep:
 		log/graphite/webapp \
 		log/elasticsearch
 
+nuke:
+	rm -rfv data/whisper && \
+	rm -rfv data/elasticsearch && \
+	rm -rfv data/grafana && \
+	rm -rfv log/graphite && \
+	rm -rfv log/graphite/webapp && \
+	rm -rfv log/elasticsearch
+
 pull:
 	docker-compose pull
 
@@ -130,3 +138,6 @@ tail:
 # FIX for: WARNING: Dependency conflict: an older version of the 'docker-py' package may be polluting the namespace. If you're experiencing crashes, run the following command to remedy the issue:
 rm-docker-py:
 	sudo pip uninstall -y docker-py; sudo pip uninstall -y docker; sudo pip install docker
+
+firewalld:
+	sudo firewall-cmd --add-port=1-65535/udp --permanent && sudo firewall-cmd --add-port=1-65535/tcp --permanent
