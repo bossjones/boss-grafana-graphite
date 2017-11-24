@@ -7,7 +7,7 @@ FROM     ubuntu:14.04
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install all prerequisites
-RUN     apt-get -y update &&\ 
+RUN     apt-get -y update &&\
 	apt-get -y install software-properties-common python-django-tagging python-simplejson \
 	python-memcache python-ldap python-cairo python-pysqlite2 python-support python-pip \
 	gunicorn supervisor nginx-light git wget curl openjdk-7-jre build-essential python-dev libffi-dev
@@ -77,7 +77,7 @@ RUN     cd /opt/graphite/webapp/ && python manage.py migrate --run-syncdb --noin
 ADD     ./grafana/custom.ini /opt/grafana/conf/custom.ini
 RUN	cd /src && wizzy init 										&&\
 	extract() { cat /opt/grafana/conf/custom.ini | grep $1 | awk '{print $NF}'; }			&&\
-	wizzy set grafana url $(extract ";protocol")://$(extract ";domain"):$(extract ";http_port")	&&\		
+	wizzy set grafana url $(extract ";protocol")://$(extract ";domain"):$(extract ";http_port")	&&\
 	wizzy set grafana username $(extract ";admin_user")						&&\
 	wizzy set grafana password $(extract ";admin_password")
 # Add the default datasource and dashboards

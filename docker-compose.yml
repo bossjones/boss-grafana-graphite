@@ -1,15 +1,42 @@
-version: '2'
+version: "3"
+
+# source: https://github.com/ksindi/kafka-pyspark-demo/blob/master/docker-compose.yml
+
 services:
-  grafana_graphite:
-    build: .
-    image: kamon/grafana_graphite
-    container_name: kamon-grafana-dashboard
+  grafana-graphite:
+    image: bossjones/boss-grafana-graphite:latest
+    network_mode: host
+    # container_name: boss-grafana-graphite
     ports:
       - '80:80'
       - '81:81'
       - '8125:8125/udp'
       - '8126:8126'
       - '2003:2003'
+    expose:
+      - '80'
+      - '81'
+      - '8125'
+      - '8126'
+      - '2003'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+    # source: https://github.com/moby/moby/issues/23910
+    # Docker should use the host network DNS server
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "default:127.0.0.1"
+      - "dockerhost:127.0.0.1"
+      - "latveria:127.0.0.1"
+    restart: always
+    healthcheck:
+      test: curl -s http://localhost/ || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 15
     volumes:
       - ./data/whisper:/opt/graphite/storage/whisper
       - ./data/grafana:/opt/grafana/data

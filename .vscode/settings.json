@@ -41,7 +41,6 @@
     "*.mo": "explorerExcludedFiles",
     "*.pot": "explorerExcludedFiles",
     "*.log": "explorerExcludedFiles",
-    "local_settings.py": "explorerExcludedFiles",
     "instance/": "explorerExcludedFiles",
     ".webassets-cache": "explorerExcludedFiles",
     ".scrapy": "explorerExcludedFiles",
@@ -104,6 +103,7 @@
     ".DS_Store?": "explorerExcludedFiles",
     ".sass-cache": "explorerExcludedFiles",
     "*.css.map": "explorerExcludedFiles",
+    "local_settings.py": "explorerExcludedFiles",
     ".idea/": "explorerExcludedFiles",
     "metastore_db/": "explorerExcludedFiles"
   }
