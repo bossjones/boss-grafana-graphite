@@ -144,3 +144,16 @@ firewalld: firewalld-reload
 
 firewalld-reload:
 	sudo firewall-cmd --reload
+
+install-golang:
+	cd ~/dev && \
+	git clone https://github.com/canha/golang-tools-install-script.git && \
+	cd golang-tools-install-script/ && \
+	bash goinstall.sh --64
+
+chown-usr-local-bin:
+	sudo chown pi:pi -Rv /usr/local/bin/
+
+install-direnv:
+	curl -L 'https://github.com/direnv/direnv/releases/download/v2.13.1/direnv.linux-amd64' > direnv && \
+	chmod +x /usr/local/bin/direnv
